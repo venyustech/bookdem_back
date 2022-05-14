@@ -12,12 +12,229 @@ datasource db {
 
 model User {
   id            Int    @id @default(autoincrement())
-  name          String
+  email         String
   username      String @unique
   password      String
   profileImg    String
   backgroungImg String
   description   String
 
+  Group             Group[]
+  ParticipantsGroup ParticipantsGroup[]
+  AdminsGroup       AdminsGroup[]
+  UserBookFavorite  UserBookFavorite[]
+  UserNextBook      UserNextBook[]
+  UserAlreadyRead   UserAlreadyRead[]
+  BookEvaluetion    BookEvaluetion[]
+  UserReadingBook   UserReadingBook[]
   @@map("users")
+}
+
+model Group {
+  id          Int     @id @default(autoincrement())
+  description String
+  profileImg  String
+  owner       User    @relation(fields: [owner_id], references: [id])
+  owner_id    Int
+  privacy     Privacy @relation(fields: [privacy_id], references: [id])
+  privacy_id  Int
+
+  ParticipantsGroup  ParticipantsGroup[]
+  AdminsGroup        AdminsGroup[]
+  ReadingByGroup     ReadingByGroup[]
+  AlreadyReadByGroup AlreadyReadByGroup[]
+  NextBooksByGroup   NextBooksByGroup[]
+  @@map("groups")
+}
+
+model Privacy {
+  id   Int    @id @default(autoincrement())
+  type String
+
+  Group            Group[]
+  UserBookFavorite UserBookFavorite[]
+  UserNextBook     UserNextBook[]
+  UserAlreadyRead  UserAlreadyRead[]
+  BookEvaluetion   BookEvaluetion[]
+  UserReadingBook  UserReadingBook[]
+  @@map("privacy")
+}
+
+model ParticipantsGroup {
+  id       Int   @id @default(autoincrement())
+  user     User  @relation(fields: [user_id], references: [id])
+  user_id  Int
+  group    Group @relation(fields: [group_id], references: [id])
+  group_id Int
+
+  @@map("participantsGroup")
+}
+
+model AdminsGroup {
+  id       Int   @id @default(autoincrement())
+  user     User  @relation(fields: [user_id], references: [id])
+  user_id  Int
+  group    Group @relation(fields: [group_id], references: [id])
+  group_id Int
+
+  @@map("adminsGroup")
+}
+
+model ReadingByGroup {
+  id       Int   @id @default(autoincrement())
+  group    Group @relation(fields: [group_id], references: [id])
+  group_id Int
+  book     Book  @relation(fields: [book_id], references: [id])
+  book_id  Int
+
+  @@map("reading_bygroup")
+}
+
+model AlreadyReadByGroup {
+  id       Int   @id @default(autoincrement())
+  group    Group @relation(fields: [group_id], references: [id])
+  group_id Int
+  book     Book  @relation(fields: [book_id], references: [id])
+  book_id  Int
+
+  @@map("alread_read_bygroup")
+}
+
+model NextBooksByGroup {
+  id       Int   @id @default(autoincrement())
+  group    Group @relation(fields: [group_id], references: [id])
+  group_id Int
+  book     Book  @relation(fields: [book_id], references: [id])
+  book_id  Int
+
+  @@map("next_books_bygroup")
+}
+
+model Book {
+  id          Int    @id @default(autoincrement())
+  title       String
+  pictureUrl  String
+  description String
+  author      Author @relation(fields: [authors_id], references: [id])
+  authors_id  Int
+
+  Book_Categories    Book_Categories[]
+  Book_genders       Book_genders[]
+  ReadingByGroup     ReadingByGroup[]
+  AlreadyReadByGroup AlreadyReadByGroup[]
+  NextBooksByGroup   NextBooksByGroup[]
+  UserBookFavorite   UserBookFavorite[]
+  UserNextBook       UserNextBook[]
+  UserAlreadyRead    UserAlreadyRead[]
+  BookEvaluetion     BookEvaluetion[]
+  UserReadingBook    UserReadingBook[]
+  @@map("books")
+}
+
+model Author {
+  id          Int    @id @default(autoincrement())
+  name        String
+  description String
+  pictureUrl  String
+
+  Book Book[]
+  @@map("authors")
+}
+
+model Category {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  Book_Categories Book_Categories[]
+  @@map("categories")
+}
+
+model Gender {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  Book_genders Book_genders[]
+  @@map("genders")
+}
+
+model Book_Categories {
+  id            Int      @id @default(autoincrement())
+  book          Book     @relation(fields: [books_id], references: [id])
+  books_id      Int
+  categorie     Category @relation(fields: [categories_id], references: [id])
+  categories_id Int
+
+  @@map("books_categories")
+}
+
+model Book_genders {
+  id         Int    @id @default(autoincrement())
+  book       Book   @relation(fields: [books_id], references: [id])
+  books_id   Int
+  gender     Gender @relation(fields: [genders_id], references: [id])
+  genders_id Int
+
+  @@map("books_genders")
+}
+
+model BookEvaluetion {
+  id          Int     @id @default(autoincrement())
+  grade       Int
+  description Int
+  book        Book    @relation(fields: [book_id], references: [id])
+  book_id     Int
+  user        User    @relation(fields: [user_id], references: [id])
+  user_id     Int
+  privacy     Privacy @relation(fields: [privacy_id], references: [id])
+  privacy_id  Int
+
+  @@map("book_evaluetion")
+}
+
+model UserBookFavorite {
+  id         Int     @id @default(autoincrement())
+  user       User    @relation(fields: [users_id], references: [id])
+  users_id   Int
+  book       Book    @relation(fields: [books_id], references: [id])
+  books_id   Int
+  privacy    Privacy @relation(fields: [privacy_id], references: [id])
+  privacy_id Int
+
+  @@map("user_books_favorites")
+}
+
+model UserNextBook {
+  id         Int     @id @default(autoincrement())
+  user       User    @relation(fields: [users_id], references: [id])
+  users_id   Int
+  book       Book    @relation(fields: [books_id], references: [id])
+  books_id   Int
+  privacy    Privacy @relation(fields: [privacy_id], references: [id])
+  privacy_id Int
+
+  @@map("user_next_books")
+}
+
+model UserAlreadyRead {
+  id         Int     @id @default(autoincrement())
+  user       User    @relation(fields: [users_id], references: [id])
+  users_id   Int
+  book       Book    @relation(fields: [books_id], references: [id])
+  books_id   Int
+  privacy    Privacy @relation(fields: [privacy_id], references: [id])
+  privacy_id Int
+
+  @@map("user_already_read")
+}
+
+model UserReadingBook {
+  id         Int     @id @default(autoincrement())
+  user       User    @relation(fields: [users_id], references: [id])
+  users_id   Int
+  book       Book    @relation(fields: [books_id], references: [id])
+  books_id   Int
+  privacy    Privacy @relation(fields: [privacy_id], references: [id])
+  privacy_id Int
+
+  @@map("user_reading_book")
 }

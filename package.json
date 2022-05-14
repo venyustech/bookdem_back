@@ -2,7 +2,6 @@
   "name": "bookdem_back",
   "type": "module",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "build": "tsc",
@@ -40,5 +39,17 @@
     "ts-jest": "^28.0.2",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.4"
-  }
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/venyustech/bookdem_back.git"
+  },
+  "bugs": {
+    "url": "https://github.com/venyustech/bookdem_back/issues"
+  },
+  "homepage": "https://github.com/venyustech/bookdem_back#readme",
+  "description": ""
 }
