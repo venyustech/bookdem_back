@@ -8,7 +8,7 @@ services:
 
   app_node:
     build: .
-    container_name: app_node_test
+    container_name: app_node
     env_file:
       - .env.test
     entrypoint: dockerize -wait tcp://pg_bookdem:5432 -timeout 20s docker-entrypoint.sh
