@@ -12,7 +12,7 @@ jobs:
           envkey_POSTGRES_USER: "postgres"
           envkey_POSTGRES_PASSWORD: "123456"
           envkey_POSTGRES_DB: "repoprovas_test"
-          envkey_DATABASE_URL: "postgres://postgres:123456@banco:5432/repoprovas_test"
+          envkey_DATABASE_URL: "postgres://postgres:123456@pg_bookdem:5432/repoprovas_test"
           file_name: .env.test
       - name: Run tests
         run: docker-compose -f docker-compose-test.yml run app_node
