@@ -1,0 +1,17 @@
+version: "3"
+services:
+  pg_bookdem:
+    image: postgres
+    container_name: pg_bookdem
+    env_file:
+      - .env.test
+
+  app_node:
+    build: .
+    container_name: app_node_test
+    env_file:
+      - .env.test
+    entrypoint: dockerize -wait tcp://pg_bookdem:5432 -timeout 20s docker-entrypoint.sh
+    command: "npm run test"
+    depends_on:
+      - pg_bookdem
