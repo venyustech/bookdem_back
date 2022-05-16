@@ -1,4 +1,17 @@
 -- CreateTable
+CREATE TABLE "users" (
+    "id" SERIAL NOT NULL,
+    "email" TEXT NOT NULL,
+    "username" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "profileImg" TEXT NOT NULL,
+    "backgroungImg" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+
+    CONSTRAINT "users_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "groups" (
     "id" SERIAL NOT NULL,
     "description" TEXT NOT NULL,
@@ -168,6 +181,21 @@ CREATE TABLE "user_reading_book" (
 
     CONSTRAINT "user_reading_book_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "users_email_username_key" ON "users"("email", "username");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "books_title_key" ON "books"("title");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "authors_name_key" ON "authors"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "categories_name_key" ON "categories"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "genders_name_key" ON "genders"("name");
 
 -- AddForeignKey
 ALTER TABLE "groups" ADD CONSTRAINT "groups_owner_id_fkey" FOREIGN KEY ("owner_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
