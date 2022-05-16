@@ -7,4 +7,4 @@
 */
 -- AlterTable
 ALTER TABLE "users" DROP COLUMN "name",
-ADD COLUMN     "Email" TEXT NOT NULL;
+ADD COLUMN     "email" TEXT NOT NULL;
