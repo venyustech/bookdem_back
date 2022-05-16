@@ -1,7 +1,7 @@
 import Joi from "joi";
-import { CreateUserData } from "../services/userService.js";
+import { CreateUserData } from "../03-services/userService.js";
 
-export const userSchema = Joi.object<CreateUserData>({
+const userSchema = Joi.object<CreateUserData>({
   email: Joi.string(),
   username: Joi.string().required(),
   password: Joi.string().required(),
@@ -9,3 +9,14 @@ export const userSchema = Joi.object<CreateUserData>({
   backgroungImg: Joi.string(),
   description: Joi.string().required()
 });
+
+const loginSchema = Joi.object<CreateUserData>({
+  username: Joi.string().required(),
+  password: Joi.string().required(),
+});
+
+export {
+  userSchema,
+  loginSchema 
+
+}

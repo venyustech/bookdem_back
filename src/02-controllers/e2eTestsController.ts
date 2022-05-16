@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import userService from "../services/userService.js";
+import userService from "../03-services/userService.js";
 
 async function truncate(req: Request, res: Response) {
   await userService.truncate();

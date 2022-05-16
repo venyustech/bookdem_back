@@ -2,7 +2,7 @@ import "./setup.js";
 import cors from "cors";
 import express, { json } from "express";
 import "express-async-errors";
-import router from "./routers/index.js";
+import router from "./01-routers/index.js";
 
 
 const app = express();

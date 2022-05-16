@@ -1,5 +1,5 @@
 import { prisma } from "../database.js";
-import { CreateUserData } from "../services/userService.js";
+import { CreateUserData } from "../03-services/userService.js";
 
 async function findById(id: number) {
   return prisma.user.findUnique({
@@ -10,7 +10,11 @@ async function findById(id: number) {
 }
 
 async function findByEmail(email: string) {
-
+  return prisma.user.findFirst({
+    where: {
+      email,
+    },
+  });
 }
 
 async function findByUsername(username: string) {
