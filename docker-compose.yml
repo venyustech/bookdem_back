@@ -17,13 +17,12 @@ services:
       - 5000:5000
     env_file:
       - .env
+    depends_on:
+      - pg_bookdem
     volumes:
       - .:/usr/src
       - /usr/src/node_modules
-    entrypoint: dockerize -wait tcp://pg_bookdem:5432 -timeout 30s docker-entrypoint.sh
-    command: "npm run dev"
-    depends_on:
-      - pg_bookdem
+
 
 volumes:
   volum_pg_bookdem:
