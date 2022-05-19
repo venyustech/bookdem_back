@@ -183,7 +183,10 @@ CREATE TABLE "user_reading_book" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "users_email_username_key" ON "users"("email", "username");
+CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "users_username_key" ON "users"("username");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "books_title_key" ON "books"("title");

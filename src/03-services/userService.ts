@@ -7,8 +7,10 @@ import { conflictError, notFoundError, unauthorizedError } from "../utils/errorU
 
 export type CreateUserData = Omit<User, "id">;
 async function signUp(createUserData: CreateUserData) {
-  const existingUser = await userRepository.findByUsername(createUserData.username);
-  if (existingUser) throw conflictError("Username must be unique");
+  const existingUser = await userRepository.findByEmail(createUserData.email);
+  if (existingUser) {
+    throw conflictError("Email must be unique")
+  };
 
   const hashedPassword = bcrypt.hashSync(createUserData.password, 12);
   await userRepository.insert({ ...createUserData, password: hashedPassword });
@@ -30,7 +32,7 @@ async function findById(id: number) {
 }
 
 async function getUserOrFail(loginData: CreateUserData) {
-  let user = await userRepository.findByUsername(loginData.username);
+  let user = await userRepository.findByEmail(loginData.email);
   if (!user)  throw unauthorizedError("Invalid credentials");
 
   const isPasswordValid = bcrypt.compareSync(loginData.password, user.password);
