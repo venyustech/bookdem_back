@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import userService from "../03-services/userService.js";
+import authService from "../03-services/authService.js";
 
 async function truncate(req: Request, res: Response) {
-  await userService.truncate();
+  await authService.truncate();
   res.sendStatus(200);
 }
 
