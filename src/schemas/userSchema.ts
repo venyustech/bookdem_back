@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { CreateUserData } from "../03-services/userService.js";
+import { CreateUserData } from "../03-services/authService.js";
 
 const userSchema = Joi.object<CreateUserData>({
   email: Joi.string(),
@@ -18,5 +18,4 @@ const loginSchema = Joi.object<CreateUserData>({
 export {
   userSchema,
   loginSchema 
-
 }

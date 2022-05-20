@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import userService from "../03-services/userService.js";
+import authService from "../03-services/authService.js";
 import { unauthorizedError } from "../utils/errorUtils.js";
 
 export async function ensureAuthenticatedMiddleware(
@@ -18,7 +18,7 @@ export async function ensureAuthenticatedMiddleware(
     const { userId } = jwt.verify(token, process.env.JWT_SECRET) as {
       userId: number;
     };
-    const user = await userService.findById(userId);
+    const user = await authService.findById(userId);
     res.locals.user = user;
 
     next();
