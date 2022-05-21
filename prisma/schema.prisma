@@ -116,6 +116,7 @@ model Book {
   title       String @unique
   pictureUrl  String
   description String
+  linkToRead  String
   author      Author @relation(fields: [authors_id], references: [id])
   authors_id  Int
 

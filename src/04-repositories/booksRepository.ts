@@ -15,7 +15,17 @@ async function findByTitle(title: string) {
         },
     });
 }
+async function findAll() {
+    return prisma.book.findMany({
+      include:{
+        author:true,
+      }
+    });
+}
+
+
 export default {
   insert,
   findByTitle,
+  findAll
 };

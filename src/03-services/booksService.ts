@@ -1,4 +1,4 @@
-import { Author, Book } from "@prisma/client";
+import { Book } from "@prisma/client";
 import authorsRepository from "../04-repositories/authorsRepository.js";
 import booksRepository from "../04-repositories/booksRepository.js";
 import { conflictError, notFoundError } from "../utils/errorUtils.js";
@@ -14,7 +14,12 @@ async function insert(createBookData: CreateBooksData) {
 
     await booksRepository.insert(createBookData);
 }
+async function findAll(){
+    return booksRepository.findAll();
+   
+}
 
 export default {
     insert,
+    findAll
 };
