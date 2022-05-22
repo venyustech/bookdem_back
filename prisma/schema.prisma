@@ -33,6 +33,7 @@ model User {
 
 model Group {
   id          Int     @id @default(autoincrement())
+  title       String
   description String
   profileImg  String
   owner       User    @relation(fields: [owner_id], references: [id])

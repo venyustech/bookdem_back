@@ -14,6 +14,7 @@ CREATE TABLE "users" (
 -- CreateTable
 CREATE TABLE "groups" (
     "id" SERIAL NOT NULL,
+    "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "profileImg" TEXT NOT NULL,
     "owner_id" INTEGER NOT NULL,
