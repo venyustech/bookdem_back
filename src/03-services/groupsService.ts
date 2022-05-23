@@ -4,7 +4,6 @@ import {  conflictError, notFoundError, unauthorizedError } from "../utils/error
 import userRepository from '../04-repositories/userRepository.js';
 import groupsRepository from '../04-repositories/groupsRepository.js';
 
-
 export type CreateGroupData = Omit<Group, "id">;
 export type CreateParticipantData = Omit<ParticipantsGroup, "id">;
 
@@ -19,6 +18,20 @@ async function insert(createBookData: CreateGroupData, user: CreateUserData ) {
     if(existingTitle) throw conflictError("Title already exist")
 
     await groupsRepository.insert(createBookData);
+    
+}
+
+async function insertParticipant(createParticipantData: CreateParticipantData, user: CreateUserData ) {
+
+    const existingUser = await userRepository.findById(createParticipantData.user_id)
+    if(!existingUser) throw notFoundError("User_id not found as user");
+
+    if(existingUser.email !== user.email)  throw unauthorizedError("User id not the same of user");
+
+    const alreadyParticipate = await groupsRepository.findFirstParticipantGroupById(createParticipantData.user_id)
+    if(alreadyParticipate) throw conflictError("User already participate")
+
+    await groupsRepository.insertParticipant(createParticipantData);
     
 }
 
@@ -38,6 +51,7 @@ async function findUserOwnerGroups(id: number){
 
 export default {
     insert,
+    insertParticipant,
     findAll,
     findUserJoinedGroups,
     findUserOwnerGroups

@@ -7,6 +7,12 @@ async function insert(req: Request, res: Response) {
     await groupsService.insert(group, user)
     return res.sendStatus(201)
 }
+async function insertParticipant(req: Request, res: Response) {
+    const { user } = res.locals;
+    const participantInfos = req.body;
+    await groupsService.insertParticipant(participantInfos, user)
+    return res.sendStatus(201)
+}
 async function findGroups(req: Request, res: Response) {
     const groups = await groupsService.findAll();
     res.send({groups})
@@ -26,5 +32,6 @@ export default {
     insert,
     findGroups,
     findUserJoinedGroups,
-    findUserOwnerGroups
+    findUserOwnerGroups,
+    insertParticipant
 };

@@ -52,6 +52,7 @@ async function findUserOwnerGroups (id: number){
     }
   })
 }
+
 async function findById(id: number) {
   return prisma.group.findUnique({
     where:{
@@ -66,6 +67,13 @@ async function findByTitle(title: string) {
     }
   })
 }
+async function findFirstParticipantGroupById (id: number){
+  return prisma.participantsGroup.findFirst({
+    where:{
+      user_id:id,
+    }
+  })
+}
 
 export default {
   insert,
@@ -74,5 +82,6 @@ export default {
   findUserOwnerGroups,
   findById,
   findByTitle,
-  insertParticipant
+  insertParticipant,
+  findFirstParticipantGroupById
 };
