@@ -9,7 +9,6 @@ async function getUser(req: Request, res: Response) {
 }
 
 
-
 export default {
     getUser
 };
