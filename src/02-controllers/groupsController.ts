@@ -12,8 +12,19 @@ async function findGroups(req: Request, res: Response) {
     res.send({groups})
 }
 
-
+async function findUserJoinedGroups(req: Request, res: Response) {
+    const { user } = res.locals;
+    const groups = await groupsService.findUserJoinedGroups(user.id);
+    res.send({groups})
+}
+async function findUserOwnerGroups(req: Request, res: Response) {
+    const { user } = res.locals;
+    const groups = await groupsService.findUserOwnerGroups(user.id);
+    res.send({groups})
+}
 export default {
     insert,
-    findGroups
+    findGroups,
+    findUserJoinedGroups,
+    findUserOwnerGroups
 };
