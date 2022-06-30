@@ -52,6 +52,7 @@ async function findUserOwnerGroups (id: number){
     }
   })
 }
+
 async function findById(id: number) {
   return prisma.group.findUnique({
     where:{
@@ -66,6 +67,23 @@ async function findByTitle(title: string) {
     }
   })
 }
+async function findFirstParticipantGroupById (participantData: CreateParticipantData){
+  return prisma.participantsGroup.findFirst({
+    where:{
+      user_id:participantData.user_id,
+      group_id: participantData.group_id
+    }
+  })
+}
+
+async function deleteParticipant(deleteParticipantData: CreateParticipantData ) {
+  return prisma.participantsGroup.deleteMany({
+    where:{
+      user_id:deleteParticipantData.user_id,
+      group_id: deleteParticipantData.group_id,
+    }
+  })
+}
 
 export default {
   insert,
@@ -74,5 +92,7 @@ export default {
   findUserOwnerGroups,
   findById,
   findByTitle,
-  insertParticipant
+  insertParticipant,
+  findFirstParticipantGroupById,
+  deleteParticipant,
 };

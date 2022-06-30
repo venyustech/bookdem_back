@@ -3,13 +3,26 @@ import { prisma } from "../src/database.js";
 async function main() {
     await createCategories();
     await createGenders();
+    await createPrivacy();
 }
 main().catch((e) => {
-    console.log("deu ruim:",e);
     process.exit(1);
 }).finally(async()=>{
     await prisma.$disconnect();
 })
+async function createPrivacy() {
+    await prisma.privacy.createMany({
+        data: [
+            {
+                type: "public"
+            },
+            {
+                type: "private"
+            }
+        ],
+        skipDuplicates: true,
+    });
+}
 async function createGenders() {
     await prisma.gender.createMany({
         data: [
